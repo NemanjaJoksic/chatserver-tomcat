@@ -11,7 +11,7 @@ package rs.ac.bg.etf.chatserver.tomcat.actor.storage;
  */
 public interface ConnectionHolderActorStorage {
     
-    public void put(String id, String actor);
+    public void put(String id, String actorRemoteAkkaAddress);
     
     public String get(String id);
     

@@ -80,9 +80,6 @@ public class MessageHandler extends TextWebSocketHandler {
         ActorSelection actor = actorSystem.actorSelection(connectionHolderActorStorage.get(username));
         actor.tell(new  MessageFromClient(chatMessage), ActorRef.noSender());
         
-//        logger.info("[Session:{}] receiver: {}, message: \"{}\"", session.getId(), 
-//                chatMessage.getReceiver(), chatMessage.getMessage());
-//        session.sendMessage(new TextMessage("Message \"" + message.getPayload() + "\" has been received"));
     }
     
 }

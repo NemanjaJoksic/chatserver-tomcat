@@ -20,7 +20,7 @@ import rs.ac.bg.etf.chatserver.tomcat.interceptor.TicketHandshakeInterceptor;
 @Configuration
 public class ChatServerConfigurer implements WebSocketConfigurer {
     
-    public static final String CHAT_URL = "chat/{username}";
+    public static final String CHAT_URL = "/chat";
     
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {

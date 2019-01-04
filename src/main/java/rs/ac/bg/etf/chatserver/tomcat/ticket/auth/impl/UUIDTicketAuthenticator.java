@@ -8,6 +8,7 @@ package rs.ac.bg.etf.chatserver.tomcat.ticket.auth.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
+import rs.ac.bg.etf.chatserver.tomcat.model.TicketDetails;
 import rs.ac.bg.etf.chatserver.tomcat.ticket.auth.TicketAuthenticator;
 import rs.ac.bg.etf.chatserver.tomcat.ticket.storage.TicketStorage;
 
@@ -23,12 +24,11 @@ public class UUIDTicketAuthenticator implements TicketAuthenticator {
     private TicketStorage ticketStorage;
 
     @Override
-    public boolean validateTicket(String id, String ticket) {
-        String validTicket = ticketStorage.get(id);
-        boolean valid = validTicket != null && validTicket.equals(ticket);
-        if(valid)
-            ticketStorage.remove(id);
-        return valid;
+    public TicketDetails validateTicket(String ticket) {
+        TicketDetails details = ticketStorage.get(ticket);
+        if(details != null)
+            ticketStorage.remove(ticket);
+        return details;
     }
 
 }

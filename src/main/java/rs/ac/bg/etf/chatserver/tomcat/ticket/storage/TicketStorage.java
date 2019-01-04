@@ -5,16 +5,18 @@
  */
 package rs.ac.bg.etf.chatserver.tomcat.ticket.storage;
 
+import rs.ac.bg.etf.chatserver.tomcat.model.TicketDetails;
+
 /**
  *
  * @author joksin
  */
 public interface TicketStorage {
     
-    public void put(String id, String ticket);
+    public void put(String ticket, TicketDetails details);
     
-    public String get(String id);
+    public TicketDetails get(String ticket);
     
-    public void remove(String id);
+    public void remove(String ticket);
     
 }

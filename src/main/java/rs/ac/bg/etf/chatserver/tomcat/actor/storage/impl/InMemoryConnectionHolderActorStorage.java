@@ -20,8 +20,8 @@ public class InMemoryConnectionHolderActorStorage implements ConnectionHolderAct
     private final Map<String, String> map = new ConcurrentHashMap<>();
     
     @Override
-    public void put(String id, String actor) {
-        map.put(id, actor);
+    public void put(String id, String actorRemoteAkkaAddress) {
+        map.put(id, actorRemoteAkkaAddress);
     }
 
     @Override

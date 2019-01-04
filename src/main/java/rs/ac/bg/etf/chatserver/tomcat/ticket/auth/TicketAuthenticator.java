@@ -5,12 +5,14 @@
  */
 package rs.ac.bg.etf.chatserver.tomcat.ticket.auth;
 
+import rs.ac.bg.etf.chatserver.tomcat.model.TicketDetails;
+
 /**
  *
  * @author joksin
  */
 public interface TicketAuthenticator {
     
-    public boolean validateTicket(String id, String ticket);
+    public TicketDetails validateTicket(String ticket);
     
 }

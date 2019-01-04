@@ -12,11 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriTemplate;
 import rs.ac.bg.etf.chatserver.tomcat.ticket.auth.TicketAuthenticator;
 import static rs.ac.bg.etf.chatserver.tomcat.config.ChatServerConfigurer.CHAT_URL;
+import rs.ac.bg.etf.chatserver.tomcat.model.TicketDetails;
 
 /**
  *
@@ -34,19 +37,18 @@ public class TicketHandshakeInterceptor extends HttpSessionHandshakeInterceptor 
     
     @Override
     public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
-        UriTemplate uriTemplate = new UriTemplate(CHAT_URL);
-        Map<String, String> parameters = uriTemplate.match(request.getURI().toString());
         
-        String username = parameters.get(USERNAME);
-        String ticket = request.getHeaders().getFirst(TICKET);
+        UriComponents components = ServletUriComponentsBuilder.fromHttpRequest(request).build();
+        String ticket = components.getQueryParams().getFirst(TICKET);
+        TicketDetails details = ticketAuthenticator.validateTicket(ticket);
         
-        if(!ticketAuthenticator.validateTicket(username, ticket)) {
+        if(details == null) {
             response.setStatusCode(HttpStatus.UNAUTHORIZED);
             response.flush();
             return false;
         }
         
-        attributes.put(USERNAME, username);
+        attributes.put(USERNAME, details.getUsername());
         return super.beforeHandshake(request, response, wsHandler, attributes);
     }
     
